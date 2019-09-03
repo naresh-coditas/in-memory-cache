@@ -3,6 +3,7 @@ package com.tavisca.test.datastore;
 import java.util.HashMap;
 import java.util.Map;
 
+import com.tavisca.cache.IDataStore;
 import com.tavisca.test.dto.Student;
 
 public class StudentDataStore implements IDataStore<Student>{
