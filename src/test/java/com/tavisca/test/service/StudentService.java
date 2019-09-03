@@ -3,11 +3,11 @@ package com.tavisca.test.service;
 import java.lang.reflect.Proxy;
 
 import com.tavisca.cache.CachebleService;
+import com.tavisca.cache.IDataStore;
 import com.tavisca.cache.annotation.CacheRemove;
 import com.tavisca.cache.annotation.CacheSet;
 import com.tavisca.cache.annotation.Cacheable;
 import com.tavisca.cache.annotation.impl.CacheMethodInvocationHandler;
-import com.tavisca.test.datastore.IDataStore;
 import com.tavisca.test.datastore.StudentDataStore;
 import com.tavisca.test.dto.Student;
 public class StudentService implements CachebleService<Student> {
