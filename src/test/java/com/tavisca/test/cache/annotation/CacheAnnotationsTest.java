@@ -7,8 +7,8 @@ import org.junit.BeforeClass;
 import org.junit.Test;
 
 import com.tavisca.cache.CachebleService;
+import com.tavisca.cache.IDataStore;
 import com.tavisca.cache.impl.CacheManager;
-import com.tavisca.test.datastore.IDataStore;
 import com.tavisca.test.datastore.StudentDataStore;
 import com.tavisca.test.dto.Student;
 import com.tavisca.test.service.StudentService;
