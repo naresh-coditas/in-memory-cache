@@ -1,7 +1,5 @@
 package com.tavisca.cache;
 
-import com.tavisca.test.datastore.IDataStore;
-
 /**
  * Interface for Classes to Enable Caching on Service Layer
  * 
