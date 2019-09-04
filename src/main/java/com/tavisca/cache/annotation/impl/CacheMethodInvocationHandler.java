@@ -48,26 +48,6 @@ public class CacheMethodInvocationHandler implements InvocationHandler {
 			if (annotation != null) {
 				annotaionMethod = this.obj.getClass().getMethod(method.getName(), paramTypes);
 				result = this.annotationProcess(annotation, annotaionMethod, args);
-			} else {
-				if ("getRecord".equals(method.getName())) {
-					final CacheManager cacheManager = CacheManager.getInstance();
-					final String objectKey = obj.getClass().getTypeName();
-					result = cacheManager.get(objectKey);
-					if (result == null) {
-						result = method.invoke(obj, args);
-						cacheManager.set(objectKey, result);
-					}
-				} else if ("saveRecord".equals(method.getName())) {
-					final CacheManager cacheManager = CacheManager.getInstance();
-					final String objectKey = obj.getClass().getTypeName();
-					result = method.invoke(obj, args);
-					cacheManager.set(objectKey, result);
-				} else if ("removeRecord".equals(method.getName())) {
-					final CacheManager cacheManager = CacheManager.getInstance();
-					final String objectKey = obj.getClass().getTypeName();
-					result = method.invoke(obj, args);
-					cacheManager.remove(objectKey);
-				}
 			}
 
 		} catch (NoSuchMethodException e) {
