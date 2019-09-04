@@ -44,11 +44,11 @@ cacheManager.flushCache();
 
 ### Cache Annotations And CachebleService
 
-we Can use Cache Manager Effieciently by Implementing the CachebleSerive or by Using Annotations.
+we Can use Cache Manager Effieciently by Implementing the CachebleSerive and by Using Annotations.
 
 InMemoryCache Annotations and CachebleService Implementation done using Java Dynamic Proxy Design Pattern and Reflection API.
 
-For both(Cache Annotation and CachebleService), we need following static method to defined.
+we need our service class to implement CachebleSrevice and following static method to defined in that.
 ```java
 public class StudentService implements CachebleService<Student> {
 	public static CachebleService<Student> cachableInstance(IDataStore dataStore) {
