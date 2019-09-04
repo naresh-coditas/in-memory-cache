@@ -1,4 +1,4 @@
-## In Memory Cache
+## In Memory Cache(LRU Based)
 InMemoryCache is a Java Implementation which provides consistent use for caching solutions. It provides more powerful annotation. 
 InMemoryCache application is Developed based on LRU Cache which have HashMap and Doubly LinkedList, In Which HashMap will hold the keys and address of the Nodes of Doubly LinkedList  And Doubly LinkedList will hold the values of keys.  
 
