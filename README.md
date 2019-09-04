@@ -33,9 +33,31 @@ Access the Cache Manager Reference for Further Use After Initialization
 ```java
 CacheManager cacheManager = CacheManager.getInstance();
 ```
-### Cache Annotations
 
-InMemoryCache Annotations Implementation done using Java Dynamic Proxy Design Pattern and Reflection API.
+Use of Cache Manager Methods
+```java
+cacheManager.set("UserName", "Naresh Mahajan");
+String userName = cacheManager.get("UserName");
+cacheManager.remove("UserName");
+cacheManager.flushCache();
+```
+
+### Cache Annotations And CachebleService
+
+we Can use Effiecient of Cache Manager by Implementing the CachebleSerive or Annotations.
+
+InMemoryCache Annotations and CachebleService Implementation done using Java Dynamic Proxy Design Pattern and Reflection API.
+
+For both(Cache Annotation and CachebleService), we need following static method to defined.
+```java
+public class StudentService implements CachebleService<Student> {
+	public static CachebleService<Student> cachableInstance(IDataStore dataStore) {
+		StudentService service = new StudentService();
+		service.setDataStore(dataStore);
+		return (CachebleService<Student>) Proxy.newProxyInstance(service.getClass().getClassLoader(), new Class[] { 		CachebleService.class }, new CacheMethodInvocationHandler(service));
+	}
+}
+```
 
 Following Annotations are good way for Efficient use of Cache in Java Application.
 * Cachable
