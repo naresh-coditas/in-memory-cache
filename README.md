@@ -57,7 +57,8 @@ public class StudentService implements CachebleService<Student> {
 	public static CachebleService<Student> cachableInstance(IDataStore dataStore) {
 		StudentService service = new StudentService();
 		service.setDataStore(dataStore);
-		return (CachebleService<Student>) Proxy.newProxyInstance(service.getClass().getClassLoader(), new Class[] { 		CachebleService.class }, new CacheMethodInvocationHandler(service));
+		return (CachebleService<Student>) Proxy.newProxyInstance(service.getClass().getClassLoader(), 
+		new Class[] { CachebleService.class }, new CacheMethodInvocationHandler(service));
 	}
 }
 ```
