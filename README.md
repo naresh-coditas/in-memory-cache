@@ -102,7 +102,7 @@ In Above example If Suppose Student record found with XYZ Roll No, then Cache Ma
 ```java
 public class TestService {
     
-   @CacheRemove(propKet = "rollNo")
+   @CacheRemove(propKey = "rollNo")
 	public Student removeRecord(String rollNo) {
 		return dataStore.removeRecord(rollNo);
 	}
