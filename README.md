@@ -14,6 +14,9 @@ This Memory Cache Provides Followng Features,
 * There should be provisions to flush the cache.
 * Any update to any record should  update the cache and then the underlying store.(In case the updated object is present in the cache)
 
+requirements:
+* JDK1.8
+
 ## Getting Started
 
 This Application have two major Parts,
