@@ -1,6 +1,12 @@
 ## In Memory Cache
+InMemoryCache is a Java Implementation which provides consistent use for caching solutions. It provides more powerful annotation. 
+InMemoryCache application is Developed based on LRU Cache which have HashMap and Doubly LinkedList, In Which HashMap will hold the keys and address of the Nodes of Doubly LinkedList  And Doubly LinkedList will hold the values of keys.  
 
-This Memory Cache Application is Developed to Achive Following Things,
+We will remove element from Tail  and add element on Head of LinkedList and whenever any entry is accessed , it will be moved to Head. so that recently used entries will be on Top(Head) and Least used will be on Bottom(Tail).
+
+If Cache No Of Elements reaches to Max Capacity then Elements will remove from Tail of Linked List.
+
+This Memory Cache Provides Followng Features,
  
 * Any get calls to the underlying data store should be cached in memory.
 * There is a limited size to the cache.
@@ -8,107 +14,75 @@ This Memory Cache Application is Developed to Achive Following Things,
 * There should be provisions to flush the cache.
 * Any update to any record should  update the cache and then the underlying store.(In case the updated object is present in the cache)
 
-This Cache application is Developed based on LRU Cache which have HashMap and Doubly LinkedList, In Which HashMap will hold the keys and address of the Nodes of Doubly LinkedList  And Doubly LinkedList will hold the values of keys.  
-
-We will remove element from bottom and add element on start of LinkedList and whenever any entry is accessed , it will be moved to top. so that recently used entries will be on Top and Least used will be on Bottom.
-
-If count reaches to Capacity then we will remove the node from Bottom.
-
-
 ## Getting Started
 
 This Application have two major Parts,
 * Cache Manager (Core Implementation)
-* Annotations
+* Cache Annotations and CachableService
 
 ### Cache Manager (Core Implementation)
 
-CacheManager is Spring Component which take Capacity as Constructor Parameter. CacheManager is Initialize by Spring Container and Constructor Parameter( Capacity Value) are being fecth from Application properties.  
+CacheManager is Singleton Java class which initialize by init method by passing the Capacity Parameter. This Class Contains the Core LRU Cache Implementaion.
 
-CacheManager class has core LRU implementation.
-
-You can Simply Inject CacheManager in your Spring application and use cache methods.
-
-Inject Cache Manager ```@Autowired``` annotation and Use CacheManager is your application.  
-
+Initalization of Cache Manager and Access for next Use
 ```java
-public class TestService {
-    @Autowired
-    CacheManager cacheManager;
-    
-    public void SaveRecord()
-    {
-    	....
-    	cacheManager.set("key", "Value");
-    }
-    
-    public void getRecord()
-    {
-    	...
-    	return cacheManager.get("key");
-    }
-    
-    public void removeRecord()
-    {
-    	...
-    	cacheManager.remove("key");
-    }
-    
-    public void flushCache()
-    {
-    	...
-    	cacheManager.flushCache();
-    }
-}
+CacheManager cacheManager = CacheManager.init(3);// 3 is the Max Capacity of Cache Manager
 ```
 
-### Annotations
+Access the Cache Manager Reference for Further Use After Initialization
+```java
+CacheManager cacheManager = CacheManager.getInstance();
+```
+### Cache Annotations
 
-Following Annotations are good way for Efficient use of Cache in Spring Application.
+InMemoryCache Annotations Implementation done using Java Dynamic Proxy Design Pattern and Reflection API.
+
+Following Annotations are good way for Efficient use of Cache in Java Application.
 * Cachable
 * CacheSet
-* CacheGet
 * CacheRemove
 
 ### Cachable Annotation
  Cachable Annotation is Useful for cache the Returning Result of method. In Second use the data will fetch from Cache instead Data Store.
- Key attribute is required to use this Annotation.
+ propKey attribute is required to use this Annotation.
  
 ```java
+package com.tavisca.service;
 public class TestService {
     
-    @Cacheable(key="key_1")
-    public void getRecord()
+    @Cacheable(propKey="rollNo")
+    public Student getRecord(String rollNo)
     {
     	...
-    	return cacheManager.get("key");
+    	return dataStore.getStudent(rollNo);
     }
 }
 ```
+In Above example If Suppose Student record found with XYZ Roll No, then Cache Manager will Store the Store the Student Object with key as "com.tavisca.service_XYZ".
 
 ### CacheSet Annotation
- CacheSet Annotation is Useful to Update the cache, Call to this method always update the Cache with returning Result of method. Key attribute is required to use this Annotation
+ CacheSet Annotation is Useful to Update the cache, Call to this method always update the Cache with returning Result of method. propKey attribute is required to use this Annotation
  
 ```java
 public class TestService {
     
-    @CacheSet(key = "key_1")
-	public String saveRecord(String value) {
-		dataStore = value;
-		return dataStore;
+    @CacheSet(propKey = "rollNo")
+	public Student saveRecord(Student student) {
+		return dataStore.saveRecord(student);
 	}
 }
 ```
+In Above example If Suppose Student record found with XYZ Roll No, then Cache Manager will update the Record in Cache Manager with key as "com.tavisca.service_XYZ".
+
 ### CacheRemove Annotation
  Cacheremove Annotation is Useful to remove element from the cache. Key attribute is required to use this Annotation
  
 ```java
 public class TestService {
     
-   @CacheRemove(key = "key_1")
-	public String removeRecord() {
-		dataStore = null;
-		return dataStore;
+   @CacheRemove(propKet = "rollNo")
+	public Student removeRecord(String rollNo) {
+		return dataStore.removeRecord(rollNo);
 	}
 }
 ```
