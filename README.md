@@ -44,7 +44,7 @@ cacheManager.flushCache();
 
 ### Cache Annotations And CachebleService
 
-we Can use Effiecient of Cache Manager by Implementing the CachebleSerive or Annotations.
+we Can use Cache Manager Effieciently by Implementing the CachebleSerive or by Using Annotations.
 
 InMemoryCache Annotations and CachebleService Implementation done using Java Dynamic Proxy Design Pattern and Reflection API.
 
